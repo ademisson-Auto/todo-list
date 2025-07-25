@@ -1,58 +1,302 @@
-body {
-    font-family: Arial, sans-serif;
+/* Reset e configurações gerais */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f4f4f9;
+    padding: 20px;
 }
 
+/* Container principal */
 #app {
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 480px;
+    min-height: 500px;
 }
 
+/* Título */
 h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 32px;
+    font-weight: 300;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 32px;
+    position: relative;
 }
 
-input[type="text"] {
-    width: calc(100% - 60px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 2px;
 }
 
-button {
-    padding: 10px;
-    background-color: #5cb85c;
+/* Seção de input */
+.input-section {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+#taskInput {
+    flex: 1;
+    padding: 16px;
+    font-size: 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+#taskInput:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+#taskInput::placeholder {
+    color: #adb5bd;
+}
+
+#addBtn {
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
-button:hover {
-    background-color: #4cae4c;
+#addBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
 }
 
-ul {
-    list-style-type: none;
+#addBtn:active {
+    transform: translateY(0);
+}
+
+/* Filtros */
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    background: transparent;
+    color: #6c757d;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* Lista de tarefas */
+#taskList {
+    list-style: none;
     padding: 0;
+    margin: 0;
 }
 
-li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+/* Item da tarefa */
+.task-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    margin-bottom: 8px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    animation: slideIn 0.3s ease;
 }
 
-li:last-child {
-    border-bottom: none;
+.task-item:hover {
+    border-color: #e9ecef;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.task-item.completed {
+    background: #e8f5e8;
+    border-color: #28a745;
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: #6c757d;
+}
+
+/* Checkbox personalizado */
+.task-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #dee2e6;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.task-checkbox:hover {
+    border-color: #667eea;
+}
+
+.task-checkbox.checked {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border-color: #28a745;
+}
+
+.task-checkbox.checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Texto da tarefa */
+.task-text {
+    flex: 1;
+    font-size: 16px;
+    color: #2c3e50;
+    word-break: break-word;
+    line-height: 1.4;
+}
+
+/* Botão de deletar */
+.delete-btn {
+    width: 32px;
+    height: 32px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+    transform: scale(1.1);
+}
+
+/* Estado vazio */
+.empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: #6c757d;
+}
+
+.empty-state h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #495057;
+}
+
+.empty-state p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Animações */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+.task-item.removing {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    #app {
+        padding: 24px;
+        margin: 16px;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    .input-section {
+        flex-direction: column;
+    }
+    
+    #addBtn {
+        padding: 14px;
+    }
+    
+    .filters {
+        flex-wrap: wrap;
+    }
+}
 }
